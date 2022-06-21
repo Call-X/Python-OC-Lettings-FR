@@ -1,0 +1,33 @@
+{% extends 'profiles/base_b.html' %}
+{% load static %}
+
+{% block menu %}
+    <nav id="navbar" class="navbar">
+        <ul>
+        <li><a class="nav-link scrollto" href='{% url 'home' %}'>Home</a></li>
+        <li><a class="nav-link scrollto" href="#about">About</a></li>
+        <li><a class="nav-link scrollto" href="{% url 'profiles:index' %}">Profiles</a></li>
+        <li><a class="nav-link scrollto active" href="{% url 'lettings:index' %}">Lettings</a></li>
+        <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+  {% endblock %}
+
+{% block lettings %}
+    <title>Lettings</title>
+    <h1>Lettings</h1>
+    {% if lettings_list %}
+        <ul>
+        {% for letting in lettings_list %}
+            <li>
+                <a href="{% url 'letting' letting_id=letting.id %}">
+                    {{ letting.title }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No lettings are available.</p>
+    {% endif %}
+{% endblock  %}
