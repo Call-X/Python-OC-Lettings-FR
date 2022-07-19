@@ -65,9 +65,9 @@
       <nav id="navbar" class="navbar">
         {% block menu %}
         <ul>
-          <li><a class="nav-link scrollto active" href='{% url 'home' %}'>Home</a></li>
-          <li><a class="nav-link scrollto" href="{% url 'profiles:index' %}">Profiles</a></li>
-          <li><a class="nav-link scrollto" href="{% url 'lettings:index' %}">Lettings</a></li>
+          <li class="nav-link scrollto active"><a href="{% url 'home' %}">Home</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'profiles' %}">Profiles</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'Lettings' %}">Lettings</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>

@@ -3,7 +3,7 @@ from profiles.models import Profile
 
     
 def index(request):
-    template_name = "profiles/index.html"
+    template_name = 'profiles/index.html'
     """
     Sed placerat quam in pulvinar commodo. Nullam laoreet consectetur ex, sed consequat libero
     pulvinar eget. Fusc faucibus, urna quis auctor pharetra, massa dolor cursus neque, quis dictum
@@ -14,7 +14,7 @@ def index(request):
     return render(request, template_name , context) 
 
 def profile(request, username):
-    template_name = "profiles/profile.html"
+    template_name = 'profiles/profile.html'
     """
     Aliquam sed metus eget nisi tincidunt ornare accumsan eget lac
     laoreet neque quis, pellentesque dui. Nullam facilisis pharetra vulputate. Sed tincidunt,

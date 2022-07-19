@@ -1,14 +1,16 @@
 from django.urls import resolve, reverse
+from django.test import TestCase
 
 
-def test_index():
-    assert reverse('profiles:index') == '/profiles/'
-    assert resolve('/profiles/').view_name == 'profiles:index'
+class TestURL(TestCase):
+    def test_index(self):
+        assert reverse('profiles:index') == '/profiles/'
+        assert resolve('/profiles/').view_name == 'profiles:index'
 
 
-def test_profile():
-    assert (
-        reverse('profiles:profile', kwargs={'username': 'test_username'})
-        == '/profiles/test_username/'
-    )
-    assert resolve('/profiles/test/').view_name == 'profiles:profile'
+    def test_profile(self):
+        assert (
+            reverse('profiles:profile', kwargs={'username': 'test_user'})
+            == '/profiles/test_user/'
+        )
+        assert resolve('/profiles/test/').view_name == 'profiles:profile'
