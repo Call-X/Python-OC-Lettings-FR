@@ -12,22 +12,40 @@
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
     </nav><!-- .navbar -->
-  {% endblock %}
+{% endblock %}
 
 {% block lettings %}
-    <title>Lettings</title>
-    <h1>Lettings</h1>
-    {% if lettings_list %}
-        <ul>
-        {% for letting in lettings_list %}
-            <li>
-                <a href="{% url 'letting' letting_id=letting.id %}">
-                    {{ letting.title }}
-                </a>
-            </li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No lettings are available.</p>
-    {% endif %}
+  <title>Lettings</title>
+  <h1>Lettings_list</h1>
+    <section id="portfolio" class="portfolio">
+      <div class="container">
+        <div class="row" data-aos="fade-up">
+          <div class="col-lg-12 d-flex justify-content-center">
+            <ul id="portfolio-flters">
+              <li data-filter="*" class="filter-active">All</li>
+              <li data-filter=".filter-flat">Flat</li>
+              <li data-filter=".filter-house">House</li>
+              <li data-filter=".filter-villa">Villa</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      {% if lettings_list %}
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="150">
+          {% for letting in lettings_list  %}
+              <div class="col-lg-4 col-md-6 portfolio-item filter-{{ letting.type }} ">
+                <img src="{{ letting.URL }}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>{{ letting.title }}</h4>
+                  <p>{{ letting.title }}</p>
+                  <a href="{{ letting.URL }}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title={{ letting.title }}></a>
+                  <a href="{% url 'lettings:letting' letting_id=letting.id %}">{{ letting.title }}></a>
+                </div>
+              </div>
+          {% endfor %}
+          {% else %}
+            <p>No lettings are available.</p>
+          {% endif %}
+      </div> 
+    </section>
 {% endblock  %}

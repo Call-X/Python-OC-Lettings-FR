@@ -1,13 +1,19 @@
 {% extends 'profiles/base_b.html' %}
 {% load static %}
 
-{% block letting_content %}
-    <title>{{ title }}</title>
-    <h1>{{ title }}</h1>
-    <p>{{ address.number }} {{ address.street }}</p>
-    <p>{{ address.city }}, {{ address.state }} {{ address.zip_code }}</p>
-    <p>{{ address.country_iso_code }}</p>
-    <div><a href="{% url 'lettings_index' %}">Back</a></div>
-    <div><a href="{% url 'index' %}">Home</a></div>
-    <div><a href="{% url 'profiles_index' %}">Profiles</a></div>
+{% block letting_detail_content %}
+    <div class="container" style="background-color: #F1F1F1 ; margin-bottom:10px">
+        <h1 style="color: #0F3D3E">{{ title }}</h1>
+        <button type="button" class="btn btn-secondary">{{ type }}</button> 
+        <p>{{ address.number }} - {{ address.street }}</p>
+        <p>{{ address.city }} - {{ address.state }} - {{ address.zip_code }}</p>
+        <p>{{ address.country_iso_code }}</p>
+    </div>
+
+    <img src="{{ url_image }}" class="img-fluid" alt=""> 
+    <div class="menu-bottom">
+        <div><a href="{% url 'lettings:index' %}">Back</a></div>
+        <div><a href="{% url 'home' %}">Home</a></div>
+        <div><a href="{% url 'profiles:index' %}">Profiles</a></div>
+    </div>   
 {% endblock  %}
