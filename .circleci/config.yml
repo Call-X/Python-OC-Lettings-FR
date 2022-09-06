@@ -56,16 +56,16 @@ jobs:
   #     - run:
   #         name: Runing tests
   #         command: python -m pytest
-      restore_cache_cmd
-    - run:
-      name: Runing tests
-      command: |
-        .venv\Script\activate
-        python -m pytest
-    - store_test_results:
-        path: test-results
-    - store_artifacts:
-        path: test-results
+      - restore_cache_cmd
+      - run:
+        name: Runing tests
+        command: |
+          .venv\Script\activate
+          python -m pytest
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
 
   linting:
     executor: default
