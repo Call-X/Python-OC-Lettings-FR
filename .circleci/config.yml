@@ -50,7 +50,7 @@ jobs:
   test:
     executor: default
     steps:
-      checkout
+      - checkout
   #     - python/install-packages:
   #         pkg-manager: pip
   #     - run:
