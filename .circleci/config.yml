@@ -59,9 +59,9 @@ jobs:
       - restore_cache_cmd
       - run:
         name: Runing tests
-        command: |
-          .venv\Script\activate
-          python -m pytest
+          command: |
+            .venv\Script\activate
+            python -m pytest
       - store_test_results:
           path: test-results
       - store_artifacts:
@@ -74,9 +74,9 @@ jobs:
       - restore_cache_cmd
       - run:
         name: Runing linting
-        command: |
-          .venv\Script\activate
-          flake8
+          command: |
+            .venv\Script\activate
+            flake8
 
   package:
     executor: default
