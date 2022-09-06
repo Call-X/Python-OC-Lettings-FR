@@ -4,7 +4,8 @@ commands:
   restore_cache_cmd:
     steps:
       - restore_cache:
-          key: .env
+          env_file: .env
+          key: "SECRET_KEY"
 
   save_cache_cmd:
     steps:    
@@ -59,7 +60,7 @@ jobs:
     - run:
       name: Runing tests
       command: |
-        .venv/bin/activate
+        .venv\Script\activate
         python -m pytest
     - store_test_results:
         path: test-results
@@ -74,7 +75,7 @@ jobs:
       -run:
         name: Runing linting
         command: |
-          .venv/bin/activate
+          .venv\Script\activate
           flake8
 
   package:
