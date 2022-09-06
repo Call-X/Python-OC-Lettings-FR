@@ -49,13 +49,13 @@ jobs:
   test:
     executor: default
     steps:
-      - checkout
+      checkout
   #     - python/install-packages:
   #         pkg-manager: pip
   #     - run:
   #         name: Runing tests
   #         command: python -m pytest
-    - restore_cache_cmd
+      restore_cache_cmd
     - run:
       name: Runing tests
       command: |
