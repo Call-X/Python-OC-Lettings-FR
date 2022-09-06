@@ -67,16 +67,16 @@ jobs:
       - store_artifacts:
           path: test-results
 
-  linting:
-    executor: default
-    steps:
-      - checkout
-      - restore_cache_cmd
-      - run:
-        name: Runing linting
-        command: |
-          .venv\Script\activate
-          flake8
+  # linting:
+  #   executor: default
+  #   steps:
+  #     - checkout
+  #     - restore_cache_cmd
+  #     - run:
+  #       name: Runing linting
+  #       command: |
+  #         .venv\Script\activate
+  #         flake8
 
   package:
     executor: default
@@ -128,9 +128,9 @@ workflows:
       - test:
           requires:
             - build
-      - linting:
-          requires:
-            - build                           
+      # - linting:
+      #     requires:
+      #       - build                           
       - package:
           requires:
             - test
