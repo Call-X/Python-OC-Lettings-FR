@@ -1,7 +1,28 @@
 version: 2.1
 
+commands:
+  restore_cache_cmd:
+    steps:
+      - restore_cache:
+          key: .env
+
+  save_cache_cmd:
+    steps:    
+      - save_cache:
+          key: .env
+          paths:
+            - "venv"
+
+executors:
+  default: 
+      docker:
+        - image: cimg/python:3.9
+          auth:
+            username: $DOCKER_USER
+            password: $DOCKER_ACCESS_TOKEN
 # Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
 # See: https://circleci.com/docs/2.0/orb-intro/
+
 orbs:
   # The python orb contains a set of prepackaged CircleCI configuration you can use repeatedly in your configuration files
   # Orb commands and jobs help you with common scripting around a language/tool
@@ -12,37 +33,133 @@ orbs:
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+
 jobs:
-  build-and-test: 
-    docker:
-      - image: cimg/python:3.9
-        auth:
-          username: $DOCKER_USER
-          password: $DOCKER_ACCESS_TOKEN
+  build:
+    executor : default
     steps:
       - checkout
-      - python/install-packages:
-          pkg-manager: pip
       - run:
-          name: Run tests
-          command: python -m pytest
-          
+        command: |
+          python -m venv venv
+          .venv/bin/activate
+          pip install -r requirements.txt
+      - save_cache_cmd
+
+  test:
+    executor: default
+    steps:
+      - checkout
+  #     - python/install-packages:
+  #         pkg-manager: pip
+  #     - run:
+  #         name: Runing tests
+  #         command: python -m pytest
+    - restore_cache_cmd
+    - run:
+      name: Runing tests
+      command: |
+        .venv/bin/activate
+        python -m pytest
+    - store_test_results:
+        path: test-results
+    - store_artifacts:
+        path: test-results
+
+  linting:
+    executor: default
+    steps:
+      - checkout
+      - restore_cache_cmd
+      -run:
+        name: Runing linting
+        command: |
+          .venv/bin/activate
+          flake8
+
+  package:
+    executor: default
+    steps:
+      - checkout   
+      - setup_remote_docker:
+          version: 20.10.2
+      - run:
+          name: Building container
+          command: |
+            docker build -t $DOCKER_USER/oclettings-docker-build:$CIRCLE_SHA1 .   
+      - run:
+          name: Pushing container to Dockerhub
+          command: |
+            echo $DOCKER_ACCESS_TOKEN | docker login -u $DOCKER_USER --password-stdin
+            docker push $DOCKER_USER/oclettings-docker-build:$CIRCLE_SHA1 
+        
+  # deploy:
+  #   executor: default
+  #   steps:
+  #     - checkout
+  #     - setup_remote_docker:
+  #       version: 20.10.2
+  #     - run:
+  #         name: Installing Heroku CLI
+  #         command: |
+  #           sudo curl https://cli-assets.heroku.com/install.sh | sh          
+  #     - run:
+  #         name: Pulling container from Dockerhub
+  #         command: |
+  #           echo $DOCKER_ACCESS_TOKEN | docker login -u $DOCKER_USER --password-stdin
+  #           docker pull $DOCKER_USER/oclettings-docker-build:$CIRCLE_SHA1 
+  #     - run:
+  #         name: Pushing container to Heroku
+  #         command: |
+  #           heroku container:login
+  #           docker tag $DOCKER_USER/oclettings-docker-build:$CIRCLE_SHA1 registry.heroku.com/$HEROKU_APP_NAME/web
+  #           docker push registry.heroku.com/$HEROKU_APP_NAME/web
+  #     - run:
+  #         name: Releasing container
+  #         command: |          
+  #           heroku container:release web -a $HEROKU_APP_NAME
+
+  
 workflows:
-  test-and-deploy:
+  build_test_package_deploy:
     jobs:
-      - build-and-test
-      - docker/publish:
-          image: "e1m2i3l4/orange_county_lettings"
-          tag: "$latest"
-          extra_build_args: '--build-arg secret_key=$SECRET_KEY'
+      - build      
+      - test:
           requires:
-            - build-and-test
+            - build
+      - linting:
+          requires:
+            - build                           
+      - package:
+          requires:
+            - test
+            - linting
           filters:
             branches:
-              only: master
-      - heroku/deploy-via-git:
-          requires:
-            - build-and-test
-          filters:
-            branches:
-              only: master
+              only: master    
+      # - deploy:
+      #     requires:
+      #       - package
+
+
+
+
+
+
+    # jobs:
+    #   - build-and-test
+    #   - docker/publish:
+    #       image: "e1m2i3l4/orange_county_lettings"
+    #       tag: "$latest"
+    #       extra_build_args: '--build-arg secret_key=$SECRET_KEY'
+    #       requires:
+    #         - build-and-test
+    #       filters:
+    #         branches:
+    #           only: master
+    #   - heroku/deploy-via-git:
+    #       requires:
+    #         - build-and-test
+    #       filters:
+    #         branches:
+    #           only: master
