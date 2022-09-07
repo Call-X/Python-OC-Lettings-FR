@@ -36,7 +36,7 @@ orbs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 
 jobs:
-  build:
+  - build:
     executor: default
   - docker/publish:
     image: "e1m2i3l4/orange_county_lettings"
