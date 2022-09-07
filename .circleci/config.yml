@@ -38,13 +38,21 @@ orbs:
 jobs:
   build:
     executor: default
+    env_file: .env
+    docker/publish:
+      image: "e1m2i3l4/orange_county_lettings"
+      tag: "$latest"
+      extra_build_args: '--build-arg secret_key=$SECRET_KEY'
+      filters:
+        branches:
+          only: master
     steps:
       - checkout
       - run:
-        command: |
-          python -m venv venv
-          .venv/bin/activate
-          pip install -r requirements.txt
+          command: |
+            python -m venv venv
+            .venv\Scripts\activate
+            pip install -r requirements.txt
       - save_cache_cmd
 
   test:
@@ -58,10 +66,10 @@ jobs:
   #         command: python -m pytest
       - restore_cache_cmd
       - run:
-        name: Runing tests
-        command: |
-          .venv\Script\activate
-          python -m pytest
+          name: Runing tests
+          command: |
+            .venv\Script\activate
+            python -m pytest
       - store_test_results:
           path: test-results
       - store_artifacts:
@@ -141,11 +149,6 @@ workflows:
       # - deploy:
       #     requires:
       #       - package
-
-
-
-
-
 
     # jobs:
     #   - build-and-test
