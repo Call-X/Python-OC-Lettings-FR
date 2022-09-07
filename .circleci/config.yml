@@ -38,13 +38,12 @@ orbs:
 jobs:
   build:
     executor: default
-      docker:
-        image: "e1m2i3l4/orange_county_lettings"
-        tag: "$latest"
-        # extra_build_args: '--build-arg secret_key=$SECRET_KEY'
-        filters:
-          branches:
-            only: master
+      image: "e1m2i3l4/orange_county_lettings"
+      tag: "$latest"
+      # extra_build_args: '--build-arg secret_key=$SECRET_KEY'
+      filters:
+        branches:
+          only: master
     steps:
       - checkout
       - run:
