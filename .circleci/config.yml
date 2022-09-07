@@ -50,8 +50,8 @@ jobs:
       - checkout
       - run:
           command: |
-            python -m venv venv
-            .venv\Scripts\activate
+            python -m venv venv \
+            .venv\Scripts\activate \
             pip install -r requirements.txt
       - save_cache_cmd
 
@@ -68,7 +68,7 @@ jobs:
       - run:
           name: Runing tests
           command: |
-            .venv\Script\activate
+            .venv\Script\activate \
             python -m pytest
       - store_test_results:
           path: test-results
