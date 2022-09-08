@@ -38,9 +38,9 @@ orbs:
 jobs:
   build:
     executor: default
-  - docker/publish:
-    image: "e1m2i3l4/orange_county_lettings"
-    tag: "$latest"
+    docker:
+      - image: "e1m2i3l4/orange_county_lettings"
+        tag: "$latest"
 
     filters:
       branches:
