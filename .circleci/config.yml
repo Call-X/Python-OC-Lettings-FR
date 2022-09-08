@@ -26,19 +26,23 @@ jobs:
             python -m venv venv 
             .venv/bin/activate 
             pip install -r requirements.txt
+      - run: 
+          command: python -m pytest
+
+
           
-  test:
-    steps:
-      - checkout
-      - run:
-          name: Runing tests
-          command: |
-            .venv/bin/activate
-            python -m pytest
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: test-results
+  # test:
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Runing tests
+  #         command: |
+  #           .venv/bin/activate
+  #           python -m pytest
+  #     - store_test_results:
+  #         path: test-results
+  #     - store_artifacts:
+  #         path: test-results
 
   # linting:
   #   executor: default
