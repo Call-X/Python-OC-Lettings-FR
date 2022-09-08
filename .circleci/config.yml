@@ -36,15 +36,16 @@ orbs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 
 jobs:
-  - build:
+  build:
     executor: default
   - docker/publish:
     image: "e1m2i3l4/orange_county_lettings"
     tag: "$latest"
-    # extra_build_args: '--build-arg secret_key=$SECRET_KEY'
+
     filters:
       branches:
         only: master
+
     steps:
       - checkout
       - run:
@@ -58,11 +59,6 @@ jobs:
     executor: default
     steps:
       - checkout
-  #     - python/install-packages:
-  #         pkg-manager: pip
-  #     - run:
-  #         name: Runing tests
-  #         command: python -m pytest
       - restore_cache_cmd
       - run:
           name: Runing tests
@@ -85,50 +81,7 @@ jobs:
   #         .venv\Script\activate
   #         flake8
 
-  package:
-    executor: default
-    steps:
-      - checkout   
-      - setup_remote_docker:
-          version: 20.10.2
-      - run:
-          name: Building container
-          command: |
-            docker build -t $DOCKER_USER/oclettings-docker-build:$CIRCLE_SHA1 .   
-      - run:
-          name: Pushing container to Dockerhub
-          command: |
-            echo $DOCKER_ACCESS_TOKEN | docker login -u $DOCKER_USER --password-stdin
-            docker push $DOCKER_USER/oclettings-docker-build:$CIRCLE_SHA1 
-        
-  deploy:
-    executor: default
-    steps:
-      - checkout
-      - setup_remote_docker:
-        version: 20.10.2
-      - run:
-          name: Installing Heroku CLI
-          command: |
-            sudo curl https://cli-assets.heroku.com/install.sh | sh          
-      - run:
-          name: Pulling container from Dockerhub
-          command: |
-            echo $DOCKER_ACCESS_TOKEN | docker login -u $DOCKER_USER --password-stdin
-            docker pull $DOCKER_USER/oclettings-docker-build:$CIRCLE_SHA1 
-      - run:
-          name: Pushing container to Heroku
-          command: |
-            heroku container:login
-            docker tag $DOCKER_USER/oclettings-docker-build:$CIRCLE_SHA1 registry.heroku.com/$HEROKU_APP_NAME/web
-            docker push registry.heroku.com/$HEROKU_APP_NAME/web
-      - run:
-          name: Releasing container
-          command: |          
-            heroku container:release web -a $HEROKU_APP_NAME
-
-  
-workflows:
+:
   build_test_package_deploy:
     jobs:
       - build      
@@ -138,16 +91,15 @@ workflows:
       # - linting:
       #     requires:
       #       - build                           
-      - package:
-          requires:
-            - test
-            - linting
           filters:
             branches:
               only: master    
-      - deploy:
-          requires:
-            - package
+
+
+
+
+
+
 
     # jobs:
     #   - build-and-test
