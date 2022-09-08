@@ -4,12 +4,12 @@ commands:
   restore_cache_cmd:
     steps:
       - restore_cache:
-        
+        key: oclettings_venv-{{ .Branch }}-{{ checksum "requirements.txt" }}
           
-
   save_cache_cmd:
     steps:    
       - save_cache:
+        key: oclettings_venv-{{ .Branch }}-{{ checksum "requirements.txt" }}
         paths:
           - "venv"
 
