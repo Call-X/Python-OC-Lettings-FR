@@ -17,7 +17,8 @@ orbs:
 jobs:
   build:
     docker:
-      - image: "e1m2i3l4/orange_county_lettings"
+      - image: cimg/python:3.10.2
+
 
     steps:
       - checkout
