@@ -24,16 +24,13 @@ jobs:
     executor: default
     docker:
       - image: "e1m2i3l4/orange_county_lettings"
-        auth: 
-          username: $DOCKER_USER
-          password: $DOCKER_ACCESS_TOKEN
 
     steps:
       - checkout
       - run:
           command: |
             python -m venv venv 
-            .venv\Scripts\activate 
+            .venv/bin/activate 
             pip install -r requirements.txt
           
   test:
@@ -43,7 +40,7 @@ jobs:
       - run:
           name: Runing tests
           command: |
-            .venv\Script\activate \
+            .venv/bin/activate
             python -m pytest
       - store_test_results:
           path: test-results
