@@ -1,19 +1,6 @@
 version: 2.1
 
-commands:
-  restore_cache_cmd:
-    steps:
-      - restore_cache:
-        key: oclettings_venv-{{ .Branch }}-{{ checksum ".env" }}
-          
-  save_cache_cmd:
-    steps:    
-      - save_cache:
-        key: oclettings_venv-{{ .Branch }}-{{ checksum ".env" }}
-        paths:
-          - "venv"
-
-executor:
+executors:
   default: 
     docker:
       - image: cimg/python:3.9
@@ -35,7 +22,6 @@ orbs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 
 jobs:
-  env_file: .env
   build:
     executor: default
     docker:
@@ -53,13 +39,12 @@ jobs:
           python -m venv venv 
           .venv\Scripts\activate 
           pip install -r requirements.txt
-      - save_cache_cmd
+      
 
   test:
     executor: default
     steps:
       - checkout
-      - restore_cache_cmd
       - run:
           name: Runing tests
           command: |
