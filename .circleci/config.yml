@@ -26,21 +26,15 @@ jobs:
     executor: default
     docker:
       - image: "e1m2i3l4/orange_county_lettings"
-        tag: "$latest"
-
-    filters:
-      branches:
-        only: master
 
     steps:
       - checkout
       - run:
-        command: |
-          python -m venv venv 
-          .venv\Scripts\activate 
-          pip install -r requirements.txt
-      
-
+          command: |
+            python -m venv venv 
+            .venv\Scripts\activate 
+            pip install -r requirements.txt
+          
   test:
     executor: default
     steps:
@@ -66,18 +60,18 @@ jobs:
   #         .venv\Script\activate
   #         flake8
 
-  build_test_deploy:
-    jobs:
-      - build      
-      - test:
-          requires:
-            - build
-      # - linting:
-      #     requires:
-      #       - build                           
-          filters:
-            branches:
-              only: master    
+  # build_test_deploy:
+  #   jobs:
+  #     - build      
+  #     - test:
+  #         requires:
+  #           - build
+  #     # - linting:
+  #     #     requires:
+  #     #       - build                           
+  #         filters:
+  #           branches:
+  #             only: master    
 
 
 
