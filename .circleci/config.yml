@@ -49,10 +49,10 @@ jobs:
     steps:
       - checkout
       - run:
-          command: |
-            python -m venv venv 
-            .venv\Scripts\activate 
-            pip install -r requirements.txt
+        command: |
+          python -m venv venv 
+          .venv\Scripts\activate 
+          pip install -r requirements.txt
       - save_cache_cmd
 
   test:
