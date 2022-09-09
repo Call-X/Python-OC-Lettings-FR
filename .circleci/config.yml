@@ -18,17 +18,17 @@ jobs:
   build:
     docker:
       - image: cimg/python:3.10.2
-
-
     steps:
       - checkout
       - run:
           command: |
-            python -m venv venv 
-            ./venv/Srcipts/activate 
-            python pip install -r requirements.txt
+            python3 -m venv env 
+            . venv/bin/activate 
+            pip install -r requirements.txt
       - run: 
-          command: python -m pytest
+          command: 
+            . env/bin/activate
+            pytest
 
 
           
