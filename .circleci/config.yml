@@ -36,8 +36,6 @@ jobs:
         username: "${DOCKER_USER}"
         password: "${DOCKER_ACCESS_TOKEN}"
         tag: "$CIRCLE_SHA1,latest"
-        extra_build_args: '--build-arg secret_key=$SECRET_KEY --build-arg sentry_dsn=$SENTRY_DSN'
-    requires:
       - build-and-test
     filters:
       branches:
