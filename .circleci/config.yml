@@ -32,11 +32,11 @@ jobs:
 
   test-and-deploy:
     docker:
-        image: "e1m2i3l4/orange_county_lettings"
-        username: "${DOCKER_USER}"
-        password: "${DOCKER_ACCESS_TOKEN}"
+      - image: "e1m2i3l4/orange_county_lettings"
+      auth:
+        username: e1m2i3l4
+        password: $DOCKERHUB_ACCESS_TOKEN
         tag: "$CIRCLE_SHA1,latest"
-      - build-and-test
     filters:
       branches:
         only: master
