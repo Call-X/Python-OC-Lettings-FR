@@ -30,7 +30,6 @@ jobs:
             source env/bin/activate
             pytest
 
-jobs:
   test-and-deploy:
     - build-and-test
     - docker/publish:
