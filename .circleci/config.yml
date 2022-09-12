@@ -18,6 +18,9 @@ jobs:
   build:
     docker:
       - image: cimg/python:3.10.2
+        auth:
+          username: e1m2i3l4
+          password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - checkout
       - run:
@@ -33,6 +36,9 @@ jobs:
   test:
     docker:
       - image: cimg/python:3.10.2
+        auth:
+            username: e1m2i3l4
+            password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - checkout
       - run:
