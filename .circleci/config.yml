@@ -35,8 +35,8 @@ jobs:
       - image: "e1m2i3L4/orange_county_lettings"
       - tag: "latest"
       - auth:
-        username: DOCKERHUB_PASSWORD
-        password: $DOCKERHUB_ACCESS_TOKEN
+          username: DOCKERHUB_PASSWORD
+          password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - checkout
      
