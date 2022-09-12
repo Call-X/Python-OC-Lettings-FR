@@ -32,10 +32,9 @@ jobs:
 
   deploy:
     docker:
-      - image: "e1m2i3L4/orange_county_lettings"
-      - tag: "latest"
-      - auth:
-          username: DOCKERHUB_PASSWORD
+      - image: cimg/python:3.10.2
+        auth:
+          username: e1m2i3l4
           password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - checkout
