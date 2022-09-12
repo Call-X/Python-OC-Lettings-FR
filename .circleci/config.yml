@@ -42,8 +42,7 @@ jobs:
 workflows:
   build_test_and_deploy:
     jobs:
-      - build
-      - test:
+      - build-and-test:
           requires:
             - build-and-test
       - hold:
