@@ -32,7 +32,7 @@ jobs:
 
   test-and-deploy:
     docker:
-      - image: e1m2i3L4/orange_county_lettings
+    - image: e1m2i3L4/orange_county_lettings
       auth:
         username: $DOCKERHUB_PASSWORD
         password: $DOCKERHUB_ACCESS_TOKEN
