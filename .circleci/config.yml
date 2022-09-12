@@ -32,10 +32,10 @@ jobs:
 
   test-and-deploy:
     docker:
-      - image: orange_county_lettings
+      - image: e1m2i3L4/orange_county_lettings
       auth:
-        username: "e1m2i3l4"
-        password: "$DOCKERHUB_ACCESS_TOKEN"
+        username: $DOCKERHUB_PASSWORD
+        password: $DOCKERHUB_ACCESS_TOKEN
         tag: "$latest"
     filters:
       branches:
