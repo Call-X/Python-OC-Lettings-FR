@@ -35,8 +35,8 @@ jobs:
       - image: orange_county_lettings
       auth:
         username: "e1m2i3l4"
-        password: $DOCKERHUB_ACCESS_TOKEN
-        tag: "$CIRCLE_SHA1,latest"
+        password: "$DOCKERHUB_ACCESS_TOKEN"
+        tag: "$latest"
     filters:
       branches:
         only: master
