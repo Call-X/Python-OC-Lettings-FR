@@ -40,17 +40,15 @@ jobs:
       - checkout
 
 workflows:
-  build_and_test:
+  build_test_and_deploy:
     jobs:
-      - build
-      - test:
+      - build-and-test:
           requires:
-            - build
+            - build-and-test
       - hold:
           type: approval
           requires:
-            - build
-            - test
+            - build-and-test
       - deploy:
           requires:
             - hold
