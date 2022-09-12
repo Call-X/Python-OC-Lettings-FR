@@ -15,30 +15,9 @@ orbs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 
 jobs:
-  build:
+  build-and-test:
     docker:
       - image: cimg/python:3.10.2
-        auth:
-          username: e1m2i3l4
-          password: $DOCKERHUB_ACCESS_TOKEN
-    steps:
-      - checkout
-      - run:
-          command: |
-            python3 -m venv env 
-            source env/bin/activate 
-            pip install -r requirements.txt
-      - run: 
-          command: 
-            source env/bin/activate
-            docker compose up
-
-  test:
-    docker:
-      - image: cimg/python:3.10.2
-        auth:
-            username: e1m2i3l4
-            password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - checkout
       - run:
@@ -63,16 +42,14 @@ jobs:
 workflows:
   build_test_and_deploy:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
-      - hold:
-          type: approval
-          requires:
-            - build
-            - test
-      - deploy:
+      - build-and-test:
+        requires:
+          - build-and-test
+      hold:
+        type: approval
+        requires:
+          - build-and-test
+      deploy:
           requires:
             - hold
      
