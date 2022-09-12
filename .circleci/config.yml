@@ -42,9 +42,7 @@ jobs:
 workflows:
   build_test_and_deploy:
     jobs:
-      - build-and-test:
-          requires:
-            - build-and-test
+      - build-and-test
       - hold:
           type: approval
           requires:
