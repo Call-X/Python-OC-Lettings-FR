@@ -42,16 +42,16 @@ jobs:
 workflows:
   build_test_and_deploy:
     jobs:
-      - build-and-test:
-          requires:
-            - build-and-test
-      - hold:
-          type: approval
-          requires:
-            - build-and-test
-      - deploy:
-          requires:
-            - hold
+      build-and-test:
+        requires:
+          - build-and-test
+      hold:
+        type: approval
+        requires:
+          - build-and-test
+      deploy:
+        requires:
+          - hold
      
    
     # - heroku/deploy-via-git:
