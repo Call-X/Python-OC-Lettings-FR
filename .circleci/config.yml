@@ -30,16 +30,17 @@ jobs:
             source env/bin/activate
             pytest
 
-  test-and-deploy:
+  deploy:
     docker:
-    - image: e1m2i3L4/orange_county_lettings
-      auth:
-        username: $DOCKERHUB_PASSWORD
-        password: $DOCKERHUB_ACCESS_TOKEN
-        tag: "$latest"
-    filters:
-      branches:
-        only: master
+      - image: "e1m2i3L4/orange_county_lettings"
+        tag: "latest"
+        auth:
+          username: DOCKERHUB_PASSWORD
+          password: $DOCKERHUB_ACCESS_TOKEN
+    steps:
+      - checkout
+     
+   
     # - heroku/deploy-via-git:
     #     requires:
     #       - build-and-test
@@ -84,13 +85,6 @@ jobs:
   #           branches:
   #             only: master    
 
-
-
-
-
-
-
-    # jobs:
     #   - build-and-test
     #   - docker/publish:
     #       image: "e1m2i3l4/orange_county_lettings"
