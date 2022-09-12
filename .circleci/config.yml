@@ -38,6 +38,22 @@ jobs:
           password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - checkout
+
+workflows:
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - hold:
+          type: approval
+          requires:
+            - build
+            - test
+      - deploy:
+          requires:
+            - hold
      
    
     # - heroku/deploy-via-git:
