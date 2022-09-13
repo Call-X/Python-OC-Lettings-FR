@@ -43,16 +43,16 @@ workflows:
   build_test_and_deploy:
     jobs:
       - build-and-test
-      - hold:
-          type: approval
-          requires:
-            - build-and-test
+      # - hold:
+      #     type: approval
+      #     requires:
+      #       - build-and-test
           filters: 
             branches:
               only: master
       - heroku/deploy-via-git:
             requires:
-              - hold
+              - build-and-test
             filters :
              branches:
               only: master
