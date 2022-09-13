@@ -47,9 +47,15 @@ workflows:
           type: approval
           requires:
             - build-and-test
-      - deploy:
+          filters: 
+            branches:
+              only: master
+      - heroku/deploy-via-git:
             requires:
               - hold
+            filters :
+             branches:
+              only: master
      
    
     # - heroku/deploy-via-git:
