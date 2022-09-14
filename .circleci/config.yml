@@ -43,19 +43,22 @@ workflows:
   build_test_and_deploy:
     jobs:
       - build-and-test
-      - docker/publish:
+      - test:
+        requires:
+          - build-and-test
           image: "oclettingssite2:latest"
           requires:
             - build-and-test
           filters: 
             branches:
               only: master
-      - heroku/deploy-via-git:
-            requires:
-              - deploy
-            filters :
-             branches:
-              only: master
+      - hold:
+          type: approval
+          requires:
+            - build-and-test 
+      - deploy:
+          requires:
+            - hold
      
    
     # - heroku/deploy-via-git:
