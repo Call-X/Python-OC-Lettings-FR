@@ -20,6 +20,11 @@ jobs:
       - image: cimg/python:3.10.2
     steps:
       - checkout
+      - when:
+        condition:
+          equal: [master, pipeline.git.master]
+        steps:
+          -run: echo "I am on the master"
       - run:
           command: |
             python3 -m venv env 
@@ -50,65 +55,3 @@ workflows:
       - deploy:
           requires:
             - hold
-     
-   
-    # - heroku/deploy-via-git:
-    #     requires:
-    #       - build-and-test
-    #     filters:
-    #       branches:
-    #         only: master
-          
-  # test:
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Runing tests
-  #         command: |
-  #           .venv/bin/activate
-  #           python -m pytest
-  #     - store_test_results:
-  #         path: test-results
-  #     - store_artifacts:
-  #         path: test-results
-
-  # linting:
-  #   executor: default
-  #   steps:
-  #     - checkout
-  #     - restore_cache_cmd
-  #     - run:
-  #       name: Runing linting
-  #       command: |
-  #         .venv\Script\activate
-  #         flake8
-
-  # build_test_deploy:
-  #   jobs:
-  #     - build      
-  #     - test:
-  #         requires:
-  #           - build
-  #     # - linting:
-  #     #     requires:
-  #     #       - build                           
-  #         filters:
-  #           branches:
-  #             only: master    
-
-    #   - build-and-test
-    #   - docker/publish:
-    #       image: "e1m2i3l4/orange_county_lettings"
-    #       tag: "$latest"
-    #       extra_build_args: '--build-arg secret_key=$SECRET_KEY'
-    #       requires:
-    #         - build-and-test
-    #       filters:
-    #         branches:
-    #           only: master
-    #   - heroku/deploy-via-git:
-    #       requires:
-    #         - build-and-test
-    #       filters:
-    #         branches:
-    #           only: master
