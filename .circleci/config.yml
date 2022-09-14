@@ -46,7 +46,6 @@ workflows:
       - test:
         requires:
           - build-and-test
-          image: "oclettingssite2:latest"
           requires:
             - build-and-test
           filters: 
