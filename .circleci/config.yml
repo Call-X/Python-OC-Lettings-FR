@@ -20,11 +20,6 @@ jobs:
       - image: cimg/python:3.10.2
     steps:
       - checkout
-      - when:
-        condition:
-          equal: [master, pipeline.git.master]
-        steps:
-          -run: echo "I am on the master"
       - run:
           command: |
             python3 -m venv env 
@@ -43,6 +38,11 @@ jobs:
           password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - checkout
+      - when:
+        condition:
+          equal: [master, pipeline.git.master]
+        steps: 
+          - run: echo "I am on the master"
 
 workflows:
   build_test_and_deploy:
