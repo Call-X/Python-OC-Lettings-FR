@@ -43,9 +43,6 @@ workflows:
   build_test_and_deploy:
     jobs:
       - build-and-test
-          filters: 
-            branches:
-              only: master
       - hold:
           type: approval
           requires:
