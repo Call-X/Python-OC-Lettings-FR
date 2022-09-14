@@ -38,11 +38,11 @@ jobs:
           password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - checkout
-      - when:
-        condition:
-          equal: [master, pipeline.git.master]
-        steps: 
-          - run: echo "I am on the master"
+      # - when:
+      #   condition:
+      #     equal: [master, pipeline.git.master]
+      #   steps: 
+      #     - run: echo "I am on the master"
 
 workflows:
   build_test_and_deploy:
@@ -52,6 +52,12 @@ workflows:
           type: approval
           requires:
             - build-and-test 
+          filters:
+            branches:
+              only: master
       - deploy:
           requires:
             - hold
+          filters:
+            branches:
+              only: master
