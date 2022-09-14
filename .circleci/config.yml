@@ -45,7 +45,6 @@ workflows:
       - build-and-test
       - docker/publish:
           image: "oclettingssite2:latest"
-          extra_build_args: '--build-arg secret_key=$SECRET_KEY'
           requires:
             - build-and-test
           filters: 
@@ -53,7 +52,7 @@ workflows:
               only: master
       - heroku/deploy-via-git:
             requires:
-              - build-and-test
+              - deploy
             filters :
              branches:
               only: master
