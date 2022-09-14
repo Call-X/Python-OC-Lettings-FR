@@ -43,10 +43,10 @@ workflows:
   build_test_and_deploy:
     jobs:
       - build-and-test
-      # - hold:
-      #     type: approval
-      #     requires:
-      #       - build-and-test
+      - docker/publish:
+          image: "oclettingssite2:latest"
+          requires:
+            - build-and-test
           filters: 
             branches:
               only: master
