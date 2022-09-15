@@ -55,7 +55,7 @@ workflows:
           filters:
             branches:
               only: master
-      - deploy:
+      - heroku/deploy-via-git:
           requires:
             - hold
           filters:
