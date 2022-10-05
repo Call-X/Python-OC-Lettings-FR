@@ -38,11 +38,12 @@ jobs:
           password: $DOCKERHUB_ACCESS_TOKEN
     steps:
       - checkout
-      # - when:
-      #   condition:
-      #     equal: [master, pipeline.git.master]
-      #   steps: 
-      #     - run: echo "I am on the master"
+      - heroku/install
+      - run:
+          command: >
+            echo "The command above installs Heroku, the command below deploys.
+            What you do inbetween is up to you!"
+      - heroku/deploy-via-git
 
 workflows:
   build_test_and_deploy:
@@ -57,7 +58,7 @@ workflows:
               only: master
       - heroku/deploy-via-git:
           requires:
-            - hold
+            - deploy
           filters:
             branches:
               only: master
