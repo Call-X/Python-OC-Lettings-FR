@@ -30,20 +30,23 @@ jobs:
             source env/bin/activate
             pytest
 
-  deploy:
-    docker:
-      - image: cimg/python:3.10.2
-        auth:
-          username: e1m2i3l4
-          password: $DOCKERHUB_ACCESS_TOKEN
-    steps:
-      - checkout
-      - heroku/install
-      - run:
-          command: >
-            echo "The command above installs Heroku, the command below deploys.
-            What you do inbetween is up to you!"
-      - heroku/deploy-via-git
+    deploy:
+      docker:
+        - image: cimg/python:3.10.2
+          auth:
+            username: e1m2i3l4
+            password: $DOCKERHUB_ACCESS_TOKEN
+      machine: true
+      steps:
+        - checkout
+        - run:
+            name: Build and push Docker image to Heroku
+            command: |
+              set -x
+              sudo curl https://cli-assets.heroku.com/install.sh | sh
+              HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+              HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a ${HEROKU_APP_NAME} web --recursive 
+              HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a ${HEROKU_APP_NAME} web
 
 workflows:
   build_test_and_deploy:
@@ -56,9 +59,9 @@ workflows:
           filters:
             branches:
               only: master
-      - heroku/deploy-via-git:
+      - deploy:
           requires:
-            - deploy
+            - build-and-test
           filters:
             branches:
               only: master
