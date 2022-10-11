@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster
+FROM python:3.11-rc-alpine3.15
 ARG SECRET_KEY
 ARG ALLOWED_HOSTS
 ARG DEBUG
