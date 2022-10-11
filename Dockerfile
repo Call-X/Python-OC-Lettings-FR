@@ -1,4 +1,4 @@
-FROM python:3.11-rc-alpine3.15
+FROM python:alpine3.16
 ARG SECRET_KEY
 ARG ALLOWED_HOSTS
 ARG DEBUG
