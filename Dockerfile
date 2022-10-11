@@ -1,4 +1,4 @@
-FROM python:3.9.1
+FROM python:3.9-slim-buster
 ARG SECRET_KEY
 ARG ALLOWED_HOSTS
 ARG DEBUG
