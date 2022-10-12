@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn oc_lettings_site.wsgi
+web: gunicorn --bind :$PORT oc_lettings_site.wsgi
