@@ -22,4 +22,4 @@ ADD . .
 
 EXPOSE 8000
 # CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
-CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "oc_lettings_site.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "python3", "manage.py", "runserver", "oc_lettings_site.wsgi:application"]
