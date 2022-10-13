@@ -1,1 +1,1 @@
-web gunicorn --bind --pythonpath oc_lettings_site oc_lettings_site.wsgi
+web gunicorn --pythonpath oc_lettings_site oc_lettings_site.wsgi

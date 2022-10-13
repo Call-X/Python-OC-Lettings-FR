@@ -7,7 +7,7 @@ ENV ALLOWED_HOSTS=${ALLOWED_HOSTS}
 ENV DEBUG=${DEBUG}
 
 
-
+WORKDIR /app
 
 COPY requirements.txt requirements.txt
 COPY . .
@@ -16,10 +16,6 @@ RUN pip install --upgrade setuptools
 RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip3 install -r requirements.txt
 
-WORKDIR /app
-
-ADD . .
-
 EXPOSE 8000
-# CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "python3", "manage.py", "runserver", "oc_lettings_site.wsgi:application"]
+CMD python3, manage.py, runserver, 0.0.0.0:8000
+
