@@ -21,8 +21,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'SECRET KEY not found in .env').split(
 
 DEBUG = os.environ.get('DEBUG')
 
-# ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'ALLOWED HOSTS not found in .env').split(",")
-ALLOWED_HOSTS = ['*']  
+# ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'ALLOWED HOSTS not found in .env').split(",")  
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -116,9 +116,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = 'static/'
-STATICFILES_DIR = [
-    BASE_DIR / 'static',
-]
+STATICFILES_DIR = os.path.join(BASE_DIR / 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
