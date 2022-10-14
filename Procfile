@@ -1,1 +1,1 @@
-web: gunicorn --bind  oc_lettings_site oc_lettings_site.wsgi
+web: gunicorn 
