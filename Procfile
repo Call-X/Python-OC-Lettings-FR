@@ -1,2 +1,1 @@
-web: gunicorn, --bind, --workers, 3
-web: oc_lettings_site.wsgi
+web: python, manage.py, runserver, 0.0.0.0:8000
