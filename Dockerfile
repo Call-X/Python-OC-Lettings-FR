@@ -6,7 +6,6 @@ ENV SECRET_KEY=${SECRET_KEY}
 ENV ALLOWED_HOSTS=${ALLOWED_HOSTS}
 ENV DEBUG=${DEBUG}
 
-
 WORKDIR /app
 
 COPY requirements.txt requirements.txt
@@ -20,4 +19,4 @@ ADD . .
 
 EXPOSE 8000
 # CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
-CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "oc_lettings_site.wsgi"]
+CMD ["gunicorn", "--bind", ":8000", "--workers", "3"]
