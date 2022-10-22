@@ -1,16 +1,20 @@
-
 import os
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
 
 
-
+sentry_sdk.init(
+    dsn="https://98e17cd1640145aa971b31c1c3de97a8@o1411361.ingest.sentry.io/6749816",
+    integrations=[
+        DjangoIntegration(),
+    ],
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -128,3 +132,6 @@ STATICFILES_DIR = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+

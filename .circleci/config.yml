@@ -25,12 +25,16 @@ jobs:
             python3 -m venv env 
             source env/bin/activate 
             pip install -r requirements.txt
+      - run:
+          name: Lint
+          command:
+            flake8
       - run: 
           command: 
             source env/bin/activate
             pytest
 
-    deploy:
+    build-deploy-docker:
       docker:
         - image: cimg/python:3.10.2
           auth:
@@ -39,29 +43,46 @@ jobs:
       machine: true
       steps:
         - checkout
+        - setup_remote_docker
         - run:
             name: Build and push Docker image to Heroku
             command: |
-              set -x
-              sudo curl https://cli-assets.heroku.com/install.sh | sh
-              HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
-              HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a ${HEROKU_APP_NAME} web --recursive 
-              HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a ${HEROKU_APP_NAME} web
+              docker login --username=$DOCKER_USERNAME --password-stdin=$DOCKERHUB_ACCESS_TOKEN
+              docker build -t $CIRCLE_SHA1 .
+              docker tag $CIRCLE_SHA1 . $DOCKER_USERNAME/oclettingsite:$CIRCLE_SHA1
+              docker push $DOCKER_USERNAME/oclettingsite:$CIRCLE_SHA1
+              
+    deploy-heroku:
+      executor: heroku/default
+      steps:
+        - checkout
+        - run:
+            name: Storing previous commit
+            command: |
+              git rev-parse HEAD > ./commit.txt
+        - heroku/install
+        - setup_remote_docker
+        - run:
+            name: Pushing to heroku registry
+            command: |
+              heroku create $HEROKU_APP_NAME
+              heroku container:push web -a=$HEROKU_APP_NAME
+              heroku config:add ALLOWED_HOSTS=127.0.0.1 -a $HEROKU_APP_NAME
+              heroku config:add SECRET_KEY=.ENV -a $HEROKU_APP_NAME
+              heroku container:release -a $HEROKU_APP_NAME web
+              heroku open -a=$HEROKU_APP_NAME         
 
 workflows:
   build_test_and_deploy:
     jobs:
       - build-and-test
-      - hold:
-          type: approval
-          requires:
-            - build-and-test 
+      - build-deploy-docker:
           filters:
             branches:
-              only: master
-      - deploy:
+              only: 
+                - master
           requires:
             - build-and-test
-          filters:
-            branches:
-              only: master
+      - deploy-heroku:
+          requires:
+            - build-deploy-docker
