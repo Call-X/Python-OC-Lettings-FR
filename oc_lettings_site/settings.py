@@ -1,17 +1,17 @@
 import os
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
+# import sentry_sdk
+# from sentry_sdk.integrations.django import DjangoIntegration
 from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
 
 
-sentry_sdk.init(
-    dsn="https://98e17cd1640145aa971b31c1c3de97a8@o1411361.ingest.sentry.io/6749816",
-    integrations=[
-        DjangoIntegration(),
-    ],
-)
+# sentry_sdk.init(
+#     dsn="https://98e17cd1640145aa971b31c1c3de97a8@o1411361.ingest.sentry.io/6749816",
+#     integrations=[
+#         DjangoIntegration(),
+#     ],
+# )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
