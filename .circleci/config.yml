@@ -65,10 +65,9 @@ jobs:
         - run:
             name: Pushing to heroku registry
             command: |
+              heroku container:login
               heroku create $HEROKU_APP_NAME
               heroku container:push web -a=$HEROKU_APP_NAME
-              heroku config:add ALLOWED_HOSTS=127.0.0.1 -a $HEROKU_APP_NAME
-              heroku config:add SECRET_KEY=.ENV -a $HEROKU_APP_NAME
               heroku container:release -a $HEROKU_APP_NAME web
               heroku open -a=$HEROKU_APP_NAME         
 
