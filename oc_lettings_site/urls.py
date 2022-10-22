@@ -10,5 +10,5 @@ urlpatterns = [
     path('profiles/', include("profiles.urls")),
     path('admin/', admin.site.urls),
     path('lettings/', include("lettings.urls")),
-    path('sentry-debug/', sentry_debug),
+    # path('sentry-debug/', sentry_debug),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
