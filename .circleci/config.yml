@@ -46,8 +46,6 @@ jobs:
               
   deploy-heroku:
       executor: heroku/default
-      heroku auth:
-        $HEROKU_TOKEN
       steps:
         - checkout
         - run:
