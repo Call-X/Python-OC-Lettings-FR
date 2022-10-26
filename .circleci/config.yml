@@ -48,15 +48,14 @@ jobs:
     executor: heroku/default
     steps:
       - checkout
-      - run:
-          name: Storing previous commit
-          command: |
-            git rev-parse HEAD > ./commit.txt
       - heroku/install
       - setup_remote_docker
       - run:
           name: Pushing to heroku registry
           command: |
+            echo "$HEROKU_API_KEY" | docker login -u "$HEROKU_LOGIN" --password-stdin registry.heroku.com
+            docker tag $IMAGE_NAME:$CIRCLE_SHA1 registry.heroku.com/$HEROKU_APP_NAME/web
+            docker push registry.heroku.com/$HEROKU_APP_NAME/web
             heroku container:login
             heroku container:push web -a=$HEROKU_APP_NAME
             heroku config:add ALLOWED_HOSTS=* -a <HEROKU_APP_NAME>
