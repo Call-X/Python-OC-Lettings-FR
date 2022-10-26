@@ -53,13 +53,9 @@ jobs:
       - run:
           name: Pushing to heroku registry
           command: |
-            echo $HEROKU_API_KEY | docker login -u $HEROKU_LOGIN --password-stdin 
-            heroku container:login
-            heroku container:push web -a=$HEROKU_APP_NAME
-            heroku config:add ALLOWED_HOSTS=* -a <HEROKU_APP_NAME>
-            heroku config:add SECRET_KEY=.ENV -a <HEROKU_APP_NAME>
-            heroku container:release web -a $HEROKU_APP_NAME  
-            heroku open -a=$HEROKU_APP_NAME
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a $HEROKU_APP_NAME web
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a $HEROKU_APP_NAME web
 
 workflows:
   build_test_and_deploy:
