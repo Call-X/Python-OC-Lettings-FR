@@ -45,18 +45,18 @@ jobs:
             docker push $DOCKER_USERNAME/oclettingsite:$CIRCLE_SHA1
               
   deploy-heroku:
-    executor: heroku/default
+    machine: true
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - heroku/install
       - run:
-          name: Pushing to heroku registry
+          name: Setup Heroku
+          command: curl https://cli-assets.heroku.com/install.sh | sh
+      - run:
+          name: Build and push Docker image to Heroku
           command: |
-            docker login --username=$HEROKU_LOGIN --password=$HEROKU_TOKEN registry.heroku.com
-            heroku container:push web -a=$APP_NAME
-            heroku container:release -a $APP_NAME web
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a $HEROKU_APP_NAME web
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a $HEROKU_APP_NAME web
 
 workflows:
   build_test_and_deploy:
