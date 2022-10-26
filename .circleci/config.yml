@@ -44,7 +44,7 @@ jobs:
             docker tag $CIRCLE_SHA1 $DOCKER_USERNAME/oclettingsite:$CIRCLE_SHA1
             docker push $DOCKER_USERNAME/oclettingsite:$CIRCLE_SHA1
               
-  deploy-heroku:
+  deploy-to-heroku:
     executor: heroku/default
     steps:
       - checkout
@@ -55,9 +55,10 @@ jobs:
       - run:
           name: Build and push Docker image to Heroku
           command: |
-            HEROKU_API_KEY=$HEROKU_TOKEN heroku container:login
-            HEROKU_API_KEY=$HEROKU_TOKEN heroku container:push -a $HEROKU_APP_NAME web
-            HEROKU_API_KEY=$HEROKU_TOKEN heroku container:release -a $HEROKU_APP_NAME web
+            heroku status
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a $HEROKU_APP_NAME web
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a $HEROKU_APP_NAME web
 
 workflows:
   build_test_and_deploy:
@@ -70,7 +71,7 @@ workflows:
                 - master
           requires:
             - build-and-test
-      - deploy-heroku:
+      - deploy-to-heroku:
           requires:
             - build-deploy-docker
             
