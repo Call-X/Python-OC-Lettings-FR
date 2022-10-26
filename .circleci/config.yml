@@ -54,6 +54,7 @@ jobs:
       - run:
           name: Build and push Docker image to Heroku
           command: |
+            echo $HEROKU_TOKEN | docker login --username=$DOCKER_USERNAME --password-stdin
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a $HEROKU_APP_NAME web
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a $HEROKU_APP_NAME web
