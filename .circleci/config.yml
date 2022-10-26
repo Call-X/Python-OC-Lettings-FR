@@ -44,21 +44,22 @@ jobs:
             docker tag $CIRCLE_SHA1 $DOCKER_USERNAME/oclettingsite:$CIRCLE_SHA1
             docker push $DOCKER_USERNAME/oclettingsite:$CIRCLE_SHA1
               
-  deploy-to-heroku:
-    executor: heroku/default
-    steps:
-      - checkout
-      - setup_remote_docker:
-          version: 20.10.14
-          docker_layer_caching: true
-      - heroku/install
-      - run:
-          name: Build and push Docker image to Heroku
-          command: |
-            heroku status
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a $HEROKU_APP_NAME web
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a $HEROKU_APP_NAME web
+  deploy-heroku:
+      executor: heroku/default
+      steps:
+        - checkout
+        - run:
+            name: Storing previous commit
+            command: |
+              git rev-parse HEAD > ./commit.txt
+        - heroku/install
+        - setup_remote_docker
+        - run:
+            name: Pushing to heroku registry
+            command: |
+              heroku container:login
+              heroku container:push web -a $HEROKU_APP_NAME
+              heroku container:release web -a $HEROKU_APP_NAME
 
 workflows:
   build_test_and_deploy:
@@ -71,7 +72,7 @@ workflows:
                 - master
           requires:
             - build-and-test
-      - deploy-to-heroku:
+      - deploy-heroku:
           requires:
             - build-deploy-docker
             
