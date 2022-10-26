@@ -57,7 +57,7 @@ jobs:
         - run:
             name: Pushing to heroku registry
             command: |
-              echo $HEROKU_TOKEN | docker login --username=_ --password-stdin
+              echo $HEROKU_TOKEN | docker login --username=$DOCKER_USERNAME --password-stdin
               heroku container:push web -a $HEROKU_APP_NAME
               heroku container:release web -a $HEROKU_APP_NAME
 
