@@ -37,20 +37,16 @@ jobs:
     build-deploy-docker:
       docker:
         - image: cimg/python:3.10.2
-          auth:
-            username: e1m2i3l4
-            password: $DOCKERHUB_ACCESS_TOKEN
-      machine: true
       steps:
         - checkout
         - setup_remote_docker
         - run:
             name: Build and push Docker image to Heroku
             command: |
-              echo $DOCKER_TOKEN | docker login -u $DOCKER_USER --password-stdin
-              docker tag $DOCKER_USER/oc-lettings-site:$CIRCLE_SHA1 $DOCKER_USER/oc-lettings-site:latest
-              docker push $DOCKER_USER/oc-lettings-site:$CIRCLE_SHA1
-              docker push $DOCKER_USER/oc-lettings-site:latest
+              docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD
+              docker build -t $CIRCLE_SHA1 .
+              docker tag $CIRCLE_SHA1 $DOCKER_USERNAME/oclettingsite:$CIRCLE_SHA1
+              docker push $DOCKER_USERNAME/oclettingsite:$CIRCLE_SHA1
               
     deploy-heroku:
       executor: heroku/default
@@ -65,12 +61,9 @@ jobs:
         - run:
             name: Pushing to heroku registry
             command: |
-              - heroku/install
-              - run: heroku config:set BUILD_NUMBER=$CIRCLE_BUILD_NUM -a $HEROKU_APP_NAME
-              - run: heroku config:set SECRET_KEY=$SECRET_KEY -a $HEROKU_APP_NAME
-              - run: heroku config:set ADMIN_PASSWORD=$ADMIN_PASSWORD -a $HEROKU_APP_NAME
-              - run: heroku run python manage.py -x migrate -a $HEROKU_APP_NAME
-              - run: heroku run python manage.py -x collectstatic --noinput -a $HEROKU_APP_NAME    
+              heroku container:login
+              heroku container:push web -a $HEROKU_APP_NAME
+              heroku container:release web -a $HEROKU_APP_NAME  
 
 workflows:
   build_test_and_deploy:
