@@ -46,6 +46,8 @@ jobs:
               
   deploy-heroku:
       executor: heroku/default
+      heroku auth:
+        $HEROKU_TOKEN
       steps:
         - checkout
         - run:
@@ -57,7 +59,7 @@ jobs:
         - run:
             name: Pushing to heroku registry
             command: |
-              heroku container:login
+              echo $HEROKU_TOKEN | docker login --username=_ --password-stdin
               heroku container:push web -a $HEROKU_APP_NAME
               heroku container:release web -a $HEROKU_APP_NAME
 
