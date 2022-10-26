@@ -34,36 +34,40 @@ jobs:
             source env/bin/activate
             pytest
 
-    build-deploy-docker:
-      docker:
-        - image: cimg/python:3.10.2
-      steps:
-        - checkout
-        - setup_remote_docker
-        - run:
-            name: Build and push Docker image to Heroku
-            command: |
-              docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD
-              docker build -t $CIRCLE_SHA1 .
-              docker tag $CIRCLE_SHA1 $DOCKER_USERNAME/oclettingsite:$CIRCLE_SHA1
-              docker push $DOCKER_USERNAME/oclettingsite:$CIRCLE_SHA1
+  build-deploy-docker:
+    docker:
+      - image: cimg/python:3.10.2
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build and push Docker image to Heroku
+          command: |
+            docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD
+            docker build -t $CIRCLE_SHA1 .
+            docker tag $CIRCLE_SHA1 $DOCKER_USERNAME/oclettingsite:$CIRCLE_SHA1
+            docker push $DOCKER_USERNAME/oclettingsite:$CIRCLE_SHA1
               
-    deploy-heroku:
-      executor: heroku/default
-      steps:
-        - checkout
-        - run:
-            name: Storing previous commit
-            command: |
-              git rev-parse HEAD > ./commit.txt
-        - heroku/install
-        - setup_remote_docker
-        - run:
-            name: Pushing to heroku registry
-            command: |
-              heroku container:login
-              heroku container:push web -a $HEROKU_APP_NAME
-              heroku container:release web -a $HEROKU_APP_NAME  
+  deploy-heroku:
+    executor: heroku/default
+    steps:
+      - checkout
+      - run:
+          name: Storing previous commit
+          command: |
+            git rev-parse HEAD > ./commit.txt
+      - heroku/install
+      - setup_remote_docker
+      - run:
+          name: Pushing to heroku registry
+          command: |
+            heroku container:login
+            heroku create $HEROKU_APP_NAME
+            heroku container:push web -a=$HEROKU_APP_NAME
+            heroku config:add ALLOWED_HOSTS=* -a <HEROKU_APP_NAME>
+            heroku config:add SECRET_KEY=.ENV -a <HEROKU_APP_NAME>
+            heroku container:release web -a $HEROKU_APP_NAME  
+            heroku open -a=$HEROKU_APP_NAME
 
 workflows:
   build_test_and_deploy:
