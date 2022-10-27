@@ -162,3 +162,4 @@ The project Data Source Name (DSN) shall be stored in the environment variable S
 `heroku config:add SENTRY_DSN='<your_DSN>' -a <app_name>`
 
 The sentry issue report is available at the following adress:
+https://sentry.io/share/issue/0989008d79064395bbeb8e690eb56919/
