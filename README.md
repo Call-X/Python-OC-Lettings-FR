@@ -1,4 +1,4 @@
-### Summary
+### Summary:
 Site web d'Orange County Lettings
 Orange County Lettings (OC Lettings) is a start-up specialized in real estate rental business. The start-up is in the midst of expansion in the United States.
 
@@ -8,7 +8,7 @@ https://oclettingswebapp.herokuapp.com/
 
 ![Oclettingsite](oclettingsite_home.jpg)
 
-### Technical background
+### Technical background:
 The project uses the following technologies:
 
 - `Python` as the programming language
@@ -19,7 +19,7 @@ The project uses the following technologies:
 - `Heroku` for Deployment
 - `Sentry` for monitoring
 
-### Local Deployment
+### Local Deployment:
 `python` is required to run the website.
 
 1. Clone this repository (or download the code as a zip file), navigate to the root folder of the repository, create and activate a virtual environment, install project dependencies
@@ -39,17 +39,17 @@ The project uses the following technologies:
 ### Usage:
 The website is available from the following address:
 `http://localhost:8000`
-### Linting
+### Linting:
 - `cd /path/to/Python-OC-Lettings-FR`
 - `source venv/bin/activate`
 - `flake8`
 
-### Tests unitaires
+### Tests unitaires:
 - `cd /path/to/Python-OC-Lettings-FR`
 - `source venv/bin/activate`
 - `pytest`
 
-### Base de données
+### Base de données:
 - `cd /path/to/Python-OC-Lettings-FR`
 - Ouvrir une session shell `sqlite3`
 - Se connecter à la base de données `.open oc-lettings-site.sqlite3`
@@ -59,7 +59,7 @@ The website is available from the following address:
   Python-OC-Lettings-FR_profile where favorite_city like 'B%';`
 - `.quit` pour quitter
 
-### Administration
+### Administration:
 Only users with the status superuser can log in to the admin site.
 The application comes with an administration site:
 `http://localhost:8000/admin`
@@ -117,7 +117,7 @@ The application is pre-configured to be deployed on Heroku for production. This 
 
 You can now check the website from the following address: 
 `https://<app_name>.herokuapp.com.`
-### Deployment using CircleCI CI/CD Pipeline
+### Deployment using CircleCI CI/CD Pipeline:
 The pipeline created for the project is available at the following address: 
 `https://app.circleci.com/pipelines/github/Call-X/Python-OC-Lettings-FR/`
 
