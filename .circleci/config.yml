@@ -56,8 +56,8 @@ jobs:
             name: Pushing to heroku registry
             command: |
               HEROKU_API_KEY=$HEROKU_TOKEN heroku container:login
-              heroku container:push -a $HEROKU_APP_NAME web 
-              heroku container:release -a $HEROKU_APP_NAME web
+              heroku container:push web -a $HEROKU_APP_NAME 
+              heroku container:release web -a $HEROKU_APP_NAME 
 
 workflows:
   build_test_and_deploy:
