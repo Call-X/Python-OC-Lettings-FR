@@ -5,9 +5,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
-def sentry_debug(request):
-    division = 1/0
-    return request
+def trigger_error(request):
+    division_by_zero = 1 / 0
+    print(division_by_zero)
     
 
 urlpatterns = [
@@ -15,5 +15,5 @@ urlpatterns = [
     path('profiles/', include("profiles.urls")),
     path('admin/', admin.site.urls),
     path('lettings/', include("lettings.urls")),
-    path('sentry_debug', sentry_debug),
+    path('sentry_debug/', trigger_error),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
