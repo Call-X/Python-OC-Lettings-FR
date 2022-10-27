@@ -11,24 +11,24 @@ https://oclettingswebapp.herokuapp.com/
 ## Technical background
 The project uses the following technologies:
 
-https://www.python.org/ as the programming language
-https://www.djangoproject.com/ Django as a web framework
-https://docs.pytest.org/en/7.2.x/ Pytest and Coverage for testing
-https://www.docker.com/ Docker for containerization
-https://circleci.com/ CircleCI for Continuous Integration
-https://heroku.com/ Heroku for Deployment
-https://sentry.io/ Sentry for monitoring
+- `https://www.python.org/` as the programming language
+- `https://www.djangoproject.com/` Django as a web framework
+- `https://docs.pytest.org/en/7.2.x/` Pytest and Coverage for testing
+- `https://www.docker.com/` Docker for containerization
+- `https://circleci.com/` CircleCI for Continuous Integration
+- `https://heroku.com/` Heroku for Deployment
+- `https://sentry.io/` Sentry for monitoring
 
 ### Local Deployment
 `python` is required to run the website.
 
 1. Clone this repository (or download the code as a zip file), navigate to the root folder of the repository, create and activate a virtual environment, install project dependencies
 
-`git clone https://github.com/Call-X/Python-OC-Lettings-FR.git
-cd src
-python -m venv env
-source env/bin/activate
-pip install -r requirements.txt`
+- `git clone https://github.com/Call-X/Python-OC-Lettings-FR.git`
+- `cd src`
+- `python -m venv env`
+- `source env/bin/activate`
+- `pip install -r requirements.txt`
 
 2. Exécuter le site
 
