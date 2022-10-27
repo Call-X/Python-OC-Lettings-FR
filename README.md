@@ -2,7 +2,16 @@
 
 Site web d'Orange County Lettings
 
-## Développement local
+## Technical background
+The project uses the following technologies:
+
+. Python as the programming language
+. Django as a web framework
+. Pytest and Coverage for testing
+. Docker for containerization
+. CircleCI for Continuous Integration
+. Heroku for Deployment
+. Sentry for monitoring
 
 ### Prérequis
 
@@ -13,8 +22,6 @@ Site web d'Orange County Lettings
 
 Dans le reste de la documentation sur le développement local, il est supposé que la commande `python` de votre OS shell exécute l'interpréteur Python ci-dessus (à moins qu'un environnement virtuel ne soit activé).
 
-### macOS / Linux
-
 #### Cloner le repository
 
 - `cd /path/to/put/project/in`
@@ -24,7 +31,6 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 
 - `cd /path/to/Python-OC-Lettings-FR`
 - `python -m venv venv`
-- `apt-get install python3-venv` (Si l'étape précédente comporte des erreurs avec un paquet non trouvé sur Ubuntu)
 - Activer l'environnement `source venv/bin/activate`
 - Confirmer que la commande `python` exécute l'interpréteur Python dans l'environnement virtuel
 `which python`
@@ -75,3 +81,12 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 - Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
 - Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+
+### Deployment using CircleCI CI/CD Pipeline
+
+The pipeline created for the project is available at the following address: 
+https://app.circleci.com/pipelines/github/Call-X/Python-OC-Lettings-FR/
+
+The repository container a configuration file for CircleCI : .circleci/config.yml. This files implements the following workflow:
+
+![CircleCI](circleci_success.jpg)
