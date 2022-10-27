@@ -56,10 +56,8 @@ jobs:
             name: Pushing to heroku registry
             command: |
               HEROKU_API_KEY=$HEROKU_TOKEN heroku container:login
-              heroku create $HEROKU_APP_NAME 
+              HEROKU_API_KEY=$HEROKU_TOKEN heroku apps:create $HEROKU_APP_NAME --region eu 
               heroku container:push web -a $HEROKU_APP_NAME 
-              heroku config:add ALLOWED_HOSTS=$HEROKU_ALLOWED_HOSTS -a $HEROKU_APP_NAME
-              heroku config:add SECRET_KEY=$HEROKU_SECRET_KEY -a $HEROKU_APP_NAME
               heroku container:release web -a $HEROKU_APP_NAME 
 
 workflows:
