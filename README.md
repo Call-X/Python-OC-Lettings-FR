@@ -1,4 +1,4 @@
-## Summary
+### Summary
 Site web d'Orange County Lettings
 Orange County Lettings (OC Lettings) is a start-up specialized in real estate rental business. The start-up is in the midst of expansion in the United States.
 
@@ -8,16 +8,16 @@ https://oclettingswebapp.herokuapp.com/
 
 ![Oclettingsite](oclettingsite_home.jpg)
 
-## Technical background
+### Technical background
 The project uses the following technologies:
 
-- `https://www.python.org/` as the programming language
-- `https://www.djangoproject.com/` Django as a web framework
-- `https://docs.pytest.org/en/7.2.x/` Pytest and Coverage for testing
-- `https://www.docker.com/` Docker for containerization
-- `https://circleci.com/` CircleCI for Continuous Integration
-- `https://heroku.com/` Heroku for Deployment
-- `https://sentry.io/` Sentry for monitoring
+- `Python` as the programming language
+- `Django` as a web framework
+- `Pytest` and Coverage for testing
+- `Docker` for containerization
+- `CircleCI` for Continuous Integration
+- `Heroku` for Deployment
+- `Sentry` for monitoring
 
 ### Local Deployment
 `python` is required to run the website.
@@ -39,17 +39,17 @@ The project uses the following technologies:
 ### Usage:
 The website is available from the following address:
 `http://localhost:8000`
-#### Linting
+### Linting
 - `cd /path/to/Python-OC-Lettings-FR`
 - `source venv/bin/activate`
 - `flake8`
 
-#### Tests unitaires
+### Tests unitaires
 - `cd /path/to/Python-OC-Lettings-FR`
 - `source venv/bin/activate`
 - `pytest`
 
-#### Base de données
+### Base de données
 - `cd /path/to/Python-OC-Lettings-FR`
 - Ouvrir une session shell `sqlite3`
 - Se connecter à la base de données `.open oc-lettings-site.sqlite3`
@@ -59,7 +59,7 @@ The website is available from the following address:
   Python-OC-Lettings-FR_profile where favorite_city like 'B%';`
 - `.quit` pour quitter
 
-#### Administration
+### Administration
 Only users with the status superuser can log in to the admin site.
 The application comes with an administration site:
 `http://localhost:8000/admin`
@@ -150,3 +150,15 @@ The repository container a configuration file for CircleCI : `.circleci/config.y
   The jobs build, test, linting are automatically performed everytime a new commit is pushed to the Github repository.
 
 The jobs package, deploy are automatically performed everytime a new commit of the branch main is pushed to the Github repository.
+
+### Monitoring using Sentry:
+A simple surveillance process is implemented. The navigation to the page 
+`/sentry-debug` will raise a server error that will be captured as an issue in a sentry project.
+
+![Sentry](Sentry.jpg)
+
+The project Data Source Name (DSN) shall be stored in the environment variable SENTRY_DSN in Heroku (replace <your_DSN> by your project DSN and <app_name> by the Heroku app name):
+
+`heroku config:add SENTRY_DSN='<your_DSN>' -a <app_name>`
+
+The sentry issue report is available at the following adress:
