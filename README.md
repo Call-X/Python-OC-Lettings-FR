@@ -30,7 +30,7 @@ The project uses the following technologies:
 - `source env/bin/activate`
 - `pip install -r requirements.txt`
 
-2. Exécuter le site
+2. Execute the site
 
 - `cd /path/to/Python-OC-Lettings-FR`
 - `source venv/bin/activate`
@@ -49,7 +49,7 @@ The website is available from the following address:
 - `source venv/bin/activate`
 - `pytest`
 
-### Base de données:
+### Data base:
 - `cd /path/to/Python-OC-Lettings-FR`
 - Ouvrir une session shell `sqlite3`
 - Se connecter à la base de données `.open oc-lettings-site.sqlite3`
