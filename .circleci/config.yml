@@ -48,18 +48,16 @@ jobs:
       executor: heroku/default
       steps:
         - checkout
-        - run:
-            name: Storing previous commit
-            command: |
-              git rev-parse HEAD > ./commit.txt
+        - setup_remote_docker:
+            version: 20.10.14
+            docker_layer_caching: true 
         - heroku/install
-        - setup_remote_docker
         - run:
             name: Pushing to heroku registry
             command: |
-              echo $HEROKU_TOKEN | docker login --username=$DOCKER_USERNAME --password-stdin
-              heroku container:push web -a $HEROKU_APP_NAME
-              heroku container:release web -a $HEROKU_APP_NAME
+              HEROKU_API_KEY=$HEROKU_TOKEN container:login
+              heroku container:push -a $HEROKU_APP_NAME web 
+              heroku container:release -a $HEROKU_APP_NAME web
 
 workflows:
   build_test_and_deploy:
