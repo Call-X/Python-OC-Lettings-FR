@@ -64,24 +64,27 @@
 
   <!-- ======= Header ======= -->
   <header id="header" class="d-flex align-items-center">
-    <div class="container d-flex align-items-center justify-content-between">
+    {% block menu %}
+      <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="index.html">OCL</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        <h1 class="logo"><a href="index.html">OCL</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        
+        <nav id="navbar" class="navbar">
+          
+            <ul>
+              <li class="nav-link scrollto active"><a href="{% url 'home' %}">Home</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'profiles:index' %}">Profiles</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'lettings:index' %}">Lettings</a></li>
+              <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+          
+        </nav><!-- .navbar -->
 
-      <nav id="navbar" class="navbar">
-        {% block menu %}
-        <ul>
-          <li class="nav-link scrollto active"><a href="{% url 'home' %}">Home</a></li>
-          <li><a class="nav-link scrollto" href="{% url 'profiles:index' %}">Profiles</a></li>
-          <li><a class="nav-link scrollto" href="{% url 'lettings:index' %}">Lettings</a></li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-        {% endblock %}
-      </nav><!-- .navbar -->
-
-    </div>
+      </div>
+    {% endblock %}
   </header><!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
