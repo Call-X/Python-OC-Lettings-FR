@@ -153,7 +153,7 @@ The jobs package, deploy are automatically performed everytime a new commit of t
 
 ### Monitoring using Sentry:
 A simple surveillance process is implemented. The navigation to the page 
-`/sentry-debug` will raise a server error that will be captured as an issue in a sentry project.
+`/sentry-debug` will raise a server error,  that will be captured as an issue in a sentry project.
 
 ![Sentry](Sentry.jpg)
 
