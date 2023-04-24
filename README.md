@@ -146,7 +146,7 @@ The repository container a configuration file for CircleCI : `.circleci/config.y
   - tags the Docker container as required to push the container to the Heroku container registry
   - pushes the Docker container to the Heroku container registry
   - releases the Heroku application
-  the deploy job starts only after the job deploy is successfully completed
+  the deploy job starts only after the job deploy is successfully completed.
   The jobs build, test, linting are automatically performed everytime a new commit is pushed to the Github repository.
 
 The jobs package, deploy are automatically performed everytime a new commit of the branch main is pushed to the Github repository.
