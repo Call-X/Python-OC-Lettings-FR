@@ -27,11 +27,6 @@ jobs:
             pip install -r requirements.txt
       - run: 
           command: 
-            source en/bin/activate
-            Flake8 Linting
-        
-      - run: 
-          command: 
             source env/bin/activate
             pytest
 
